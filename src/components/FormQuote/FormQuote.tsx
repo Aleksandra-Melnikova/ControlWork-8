@@ -1,69 +1,70 @@
-import React, { useState } from "react";
-import { IGetQuote, IPostForm } from '../../types';
+import React, { useEffect, useState } from 'react';
+import {IQuoteForm } from '../../types';
 
-// const initialForm = {
-//   author: "",
-//   category: "",
-//   quoteText: ""
-// };
+
+
 
 interface IFormAddNewPost {
   title: string;
-  // formToOnePost?: IPostForm;
-  submitForm: (quote: IGetQuote) => void;
+  formToOneQuote?: IQuoteForm ;
+  submitForm: (quote: IQuoteForm) => void;
 }
-
+  const initialForm = {
+  author: "",
+  category: "",
+  quoteText: ""
+};
 const FormQuote: React.FC<IFormAddNewPost> = ({
   title,
-  // formToOnePost,
+  formToOneQuote,
   submitForm,
 }) => {
-  const [form, setForm] = useState<IPostForm>({
-    author:'',
-    category: '',
-    quoteText:'',
+  const [form, setForm] = useState<IQuoteForm >({
+ ...initialForm
   });
-  const category =
-  [
-    {title: 'Star Wars', id: 'star-wars'},
-    {title: 'Famous People', id: 'famous-people'},
-    {title: 'Saying', id: 'saying'},
-    {title: 'Humour', id: 'humour'},
-    {title: 'Motivational', id: 'motivational'},
+
+  const category = [
+    { title: "Star Wars", id: "star-wars" },
+    { title: "Famous People", id: "famous-people" },
+    { title: "Saying", id: "saying" },
+    { title: "Humour", id: "humour" },
+    { title: "Motivational", id: "motivational" },
   ];
 
 
-  //
-  // useEffect(() => {
-  //   if (formToOnePost) {
-  //     setForm((prevState) => ({
-  //       ...prevState,
-  //       ...formToOnePost,
-  //     }));
-  //   }
-  // }, [formToOnePost]);
+  useEffect(() => {
+    if (formToOneQuote) {
+      setForm((prevState) => ({
+        ...prevState,
+        ...formToOneQuote,
+      }));
+    }
+  }, [formToOneQuote]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (form.author.trim().length > 0 && form.category.length > 0 && form.quoteText ) {
+    if (
+      form.author.trim().length > 0 &&
+      form.category.length > 0 &&
+      form.quoteText
+    ) {
       const data = {
-        quote: { ...form },
-
+          ...form ,
       };
       submitForm(data);
 
-      // if (!formToOnePost) {
-      //   setForm({  author: "",
-      //     category: "",
-      //     quoteText: "" });
-      // }
+      if (!formToOneQuote) {
+        setForm({ ...initialForm });
+      }
     } else {
       alert("Fill in all fields");
     }
   };
   const onChangeField = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     const { name, value } = e.target;
     setForm((prevState) => {
@@ -75,16 +76,14 @@ const FormQuote: React.FC<IFormAddNewPost> = ({
   };
 
   return (
-    <div className='container'>
-
-        <h2 className="text-center mt-5">{title + " new quote"}</h2>
+    <div className="container">
+      <h2 className="text-center mt-5">{title + " quote"}</h2>
 
       <div className="form-add-new-post p-5 border border-black-200 rounded-3 fs-4 mt-5 text-start">
         <form onSubmit={onSubmit}>
-
           <div className="form-group mb-3">
             <label htmlFor="category" className="form-label fs-4">
-              {' '}
+              {" "}
               Category
             </label>
 
@@ -97,7 +96,7 @@ const FormQuote: React.FC<IFormAddNewPost> = ({
                 name="category"
                 className="form-select"
               >
-                <option className='fs-5' value="" disabled>
+                <option className="fs-5" value="" disabled>
                   Select a category
                 </option>
                 {category.map((c) => (
@@ -108,11 +107,9 @@ const FormQuote: React.FC<IFormAddNewPost> = ({
               </select>
             ) : null}
           </div>
-
           <div className="mb-3">
-
             <label htmlFor="author" className="form-label">
-              {' '}
+              {" "}
               Author
             </label>
             <input
@@ -140,8 +137,7 @@ const FormQuote: React.FC<IFormAddNewPost> = ({
           </div>
           <button className="ps-4 pe-4 btn btn-info" type="submit">
             Save
-          </button>
-          {" "}
+          </button>{" "}
         </form>
       </div>
     </div>
