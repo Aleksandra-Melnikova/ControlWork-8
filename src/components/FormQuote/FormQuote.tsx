@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IPostForm } from '../../types';
+import { IGetQuote, IPostForm } from '../../types';
 
 // const initialForm = {
 //   author: "",
@@ -10,13 +10,13 @@ import { IPostForm } from '../../types';
 interface IFormAddNewPost {
   title: string;
   // formToOnePost?: IPostForm;
-  // submitForm: (quote: IGetQuote) => void;
+  submitForm: (quote: IGetQuote) => void;
 }
 
 const FormQuote: React.FC<IFormAddNewPost> = ({
   title,
   // formToOnePost,
-  // submitForm,
+  submitForm,
 }) => {
   const [form, setForm] = useState<IPostForm>({
     author:'',
@@ -47,11 +47,11 @@ const FormQuote: React.FC<IFormAddNewPost> = ({
     e.preventDefault();
 
     if (form.author.trim().length > 0 && form.category.length > 0 && form.quoteText ) {
-      // const data = {
-      //   quote: { ...form },
-      //
-      // };
-      // submitForm(data);
+      const data = {
+        quote: { ...form },
+
+      };
+      submitForm(data);
 
       // if (!formToOnePost) {
       //   setForm({  author: "",
@@ -75,7 +75,7 @@ const FormQuote: React.FC<IFormAddNewPost> = ({
   };
 
   return (
-    <>
+    <div className='container'>
 
         <h2 className="text-center mt-5">{title + " new quote"}</h2>
 
@@ -144,7 +144,7 @@ const FormQuote: React.FC<IFormAddNewPost> = ({
           {" "}
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

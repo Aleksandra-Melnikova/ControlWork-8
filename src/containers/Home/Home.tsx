@@ -1,9 +1,15 @@
-import React from 'react';
+
+import SideNavigation from '../../components/SideNavigation/SideNavigation.tsx';
 
 const Home = () => {
   return (
-    <div>
-      Я домашняя страницы
+    <div className='container row'>
+      <div className='col-2'>
+        <SideNavigation/>
+
+      </div>
+      <div className='col-10'>  Я домашняя страницы</div>
+
     </div>
   );
 };
