@@ -1,6 +1,6 @@
 
 import FormQuote from '../../components/FormQuote/FormQuote.tsx';
-import { IGetQuote, IQuoteForm, IQuotesModifications } from '../../types';
+import { IQuoteForm} from '../../types';
 import { useNavigate, useParams } from 'react-router-dom';
 import  { useCallback, useEffect, useState } from 'react';
 import axiosAPI from '../../axiosAPI.ts';
@@ -15,17 +15,16 @@ const EditQuote = () => {
   const fetchOnePost = useCallback(async (id: string) => {
     try {
       setLoading(true);
-      const response: { data: IQuotesModifications } = await axiosAPI<IQuotesModifications>(
+      const response: { data: IQuoteForm } = await axiosAPI<IQuoteForm>(
         "quotes/" + id + ".json",
       );
 
 const result = response.data
       if (result) {
         const obj: IQuoteForm = {
-            author: result.quote.author,
-          quoteText: result.quote.quoteText,
-          category: result.quote.category,
-          id: result.quote.id,
+            author: result.author,
+          category: result.category,
+          quoteText: result.quoteText,
         };
         setQuote(obj);
       }
@@ -42,9 +41,9 @@ const result = response.data
       void fetchOnePost(params.id);
     }
   }, [params.id, fetchOnePost]);
-  console.log(params.id)
+  console.log(params.id);
 
-  const submitForm = async (quote: IGetQuote) => {
+  const submitForm = async (quote: IQuoteForm) => {
     try {
       if (params.id) {
         setLoading(true);
@@ -67,7 +66,7 @@ return (
       <>
         {quote? (
           <>
-            <FormQuote title="Edit" submitForm={submitForm} formToOneQuote={quote}/>
+            <FormQuote title="Edit" submitForm={submitForm } formToOneQuote={quote}/>
           </>
         ) : null}
       </>

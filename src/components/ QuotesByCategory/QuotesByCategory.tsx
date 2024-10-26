@@ -1,17 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { IQuoteForm, IQuoteFormModifications } from '../../types';
+import { IQuoteFormModifications, IQuotes } from '../../types';
 import axiosAPI from "../../axiosAPI.ts";
 import OneQuote from "./OneQuote/OneQuote.tsx";
 import Spinner from "../UI/Spinner/Spinner.tsx";
 
+
 interface QuotesByCategoryProps {
-  onEdit: (quote: IQuoteForm)=> void;
+  onEdit: (quote: IQuotes)=> void;
+  onDelete: (quote: IQuotes)=>void;
 }
 
 
-const QuotesByCategory:React.FC<QuotesByCategoryProps> = ({onEdit}) => {
+const QuotesByCategory:React.FC<QuotesByCategoryProps> = ({onEdit, onDelete}) => {
   const [quotes, setQuotes] = useState<IQuoteFormModifications[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+
 
   const fetchData = useCallback(async () => {
     try {
@@ -47,6 +50,8 @@ const QuotesByCategory:React.FC<QuotesByCategoryProps> = ({onEdit}) => {
     void fetchData();
   }, [fetchData]);
 
+
+
   return (
     <>
       {loading ? (
@@ -60,6 +65,7 @@ const QuotesByCategory:React.FC<QuotesByCategoryProps> = ({onEdit}) => {
                 key={quote.id}
                 quoteText={quote.quoteText}
                 author={quote.author}
+                onDelete={()=>onDelete(quote)}
               />
             ))}
           </div>
