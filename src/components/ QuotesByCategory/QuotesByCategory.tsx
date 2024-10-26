@@ -16,7 +16,7 @@ const QuotesByCategory: React.FC<QuotesByCategoryProps> = ({ onEdit, category}) 
   const fetchData = useCallback(async (category:string) => {
     try {
       if (category ===undefined){
-        category='all'
+        category='all';
       }
       setLoading(true);
       if( category ==='all' ) {
@@ -41,7 +41,7 @@ const QuotesByCategory: React.FC<QuotesByCategoryProps> = ({ onEdit, category}) 
       }
       else{
         const response: { data: IQuoteFormModifications[] } =
-          await axiosAPI<IQuoteFormModifications[]>(`"quotes.json?orderBy="category"&equalTo="star-wars""`);
+          await axiosAPI<IQuoteFormModifications[]>(`"quotes.json?orderBy="category"&equalTo="${category}""`);
         if (response) {
           const postResponseNew = Object.entries(response.data);
           const array: IQuoteFormModifications[] = [];
