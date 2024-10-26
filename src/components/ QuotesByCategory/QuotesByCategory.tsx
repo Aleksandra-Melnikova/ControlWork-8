@@ -6,31 +6,55 @@ import Spinner from "../UI/Spinner/Spinner.tsx";
 
 interface QuotesByCategoryProps {
   onEdit: (quote: IQuotes) => void;
+  category?: string;
 }
 
-const QuotesByCategory: React.FC<QuotesByCategoryProps> = ({ onEdit }) => {
+const QuotesByCategory: React.FC<QuotesByCategoryProps> = ({ onEdit, category = 'all'}) => {
   const [quotes, setQuotes] = useState<IQuoteFormModifications[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
-      const response: { data: IQuoteFormModifications[] } =
-        await axiosAPI<IQuoteFormModifications[]>("quotes.json");
-      if (response) {
-        const postResponseNew = Object.entries(response.data);
-        const array: IQuoteFormModifications[] = [];
-        for (let i = 0; i < postResponseNew.length; i++) {
-          const obj: IQuoteFormModifications = {
-            id: postResponseNew[i][0],
-            author: postResponseNew[i][1].author,
-            quoteText: postResponseNew[i][1].quoteText,
-            category: postResponseNew[i][1].category,
-          };
+      if( category !== "all" ) {
+        const response: { data: IQuoteFormModifications[] } =
+          await axiosAPI<IQuoteFormModifications[]>("quotes.json");
+        if (response) {
+          const postResponseNew = Object.entries(response.data);
+          const array: IQuoteFormModifications[] = [];
+          for (let i = 0; i < postResponseNew.length; i++) {
+            const obj: IQuoteFormModifications = {
+              id: postResponseNew[i][0],
+              author: postResponseNew[i][1].author,
+              quoteText: postResponseNew[i][1].quoteText,
+              category: postResponseNew[i][1].category,
+            };
 
-          array.push(obj);
+            array.push(obj);
+          }
+          setQuotes([...array]);
+      }
+
+      }
+      else{
+        const response: { data: IQuoteFormModifications[] } =
+          await axiosAPI<IQuoteFormModifications[]>(`quotes.json?orderBy=\"category\"&equalTo=\"${category}\"`);
+        if (response) {
+          const postResponseNew = Object.entries(response.data);
+          const array: IQuoteFormModifications[] = [];
+          for (let i = 0; i < postResponseNew.length; i++) {
+            const obj: IQuoteFormModifications = {
+              id: postResponseNew[i][0],
+              author: postResponseNew[i][1].author,
+              quoteText: postResponseNew[i][1].quoteText,
+              category: postResponseNew[i][1].category,
+            };
+
+            array.push(obj);
+          }
+          setQuotes([...array]);
         }
-        setQuotes([...array]);
+
       }
     } catch (err) {
       console.error(err);
