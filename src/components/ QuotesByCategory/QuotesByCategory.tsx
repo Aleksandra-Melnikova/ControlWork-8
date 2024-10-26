@@ -9,14 +9,17 @@ interface QuotesByCategoryProps {
   category?: string;
 }
 
-const QuotesByCategory: React.FC<QuotesByCategoryProps> = ({ onEdit, category = 'all'}) => {
+const QuotesByCategory: React.FC<QuotesByCategoryProps> = ({ onEdit, category}) => {
   const [quotes, setQuotes] = useState<IQuoteFormModifications[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchData = useCallback(async () => {
+  const fetchData = useCallback(async (category:string) => {
     try {
+      if (category ===undefined){
+        category='all'
+      }
       setLoading(true);
-      if( category !== "all" ) {
+      if( category ==='all' ) {
         const response: { data: IQuoteFormModifications[] } =
           await axiosAPI<IQuoteFormModifications[]>("quotes.json");
         if (response) {
@@ -38,7 +41,7 @@ const QuotesByCategory: React.FC<QuotesByCategoryProps> = ({ onEdit, category = 
       }
       else{
         const response: { data: IQuoteFormModifications[] } =
-          await axiosAPI<IQuoteFormModifications[]>(`quotes.json?orderBy=\"category\"&equalTo=\"${category}\"`);
+          await axiosAPI<IQuoteFormModifications[]>(`"quotes.json?orderBy="category"&equalTo="star-wars""`);
         if (response) {
           const postResponseNew = Object.entries(response.data);
           const array: IQuoteFormModifications[] = [];
@@ -64,13 +67,15 @@ const QuotesByCategory: React.FC<QuotesByCategoryProps> = ({ onEdit, category = 
   }, []);
 
   useEffect(() => {
-    void fetchData();
-  }, [fetchData]);
+    if(category)
+    void fetchData(category);
+  }, [fetchData, category]);
 
   const onDelete = async (quote: IQuotes) => {
     if (quote.id) {
       await axiosAPI.delete("quotes/" + quote.id + ".json");
-      void fetchData();
+      if(category)
+      void fetchData(category);
     }
   };
 
