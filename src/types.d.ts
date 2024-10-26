@@ -19,4 +19,3 @@ export interface IQuotes {
   author: string;
   quoteText: string;
 }
-
