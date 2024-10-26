@@ -1,26 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import {IQuoteForm } from '../../types';
-
-
-
+import React, { useEffect, useState } from "react";
+import { IQuoteForm } from "../../types";
 
 interface IFormAddNewPost {
   title: string;
-  formToOneQuote?: IQuoteForm ;
+  formToOneQuote?: IQuoteForm;
   submitForm: (quote: IQuoteForm) => void;
 }
-  const initialForm = {
+const initialForm = {
   author: "",
   category: "",
-  quoteText: ""
+  quoteText: "",
 };
 const FormQuote: React.FC<IFormAddNewPost> = ({
   title,
   formToOneQuote,
   submitForm,
 }) => {
-  const [form, setForm] = useState<IQuoteForm >({
- ...initialForm
+  const [form, setForm] = useState<IQuoteForm>({
+    ...initialForm,
   });
 
   const category = [
@@ -30,7 +27,6 @@ const FormQuote: React.FC<IFormAddNewPost> = ({
     { title: "Humour", id: "humour" },
     { title: "Motivational", id: "motivational" },
   ];
-
 
   useEffect(() => {
     if (formToOneQuote) {
@@ -50,7 +46,7 @@ const FormQuote: React.FC<IFormAddNewPost> = ({
       form.quoteText
     ) {
       const data = {
-          ...form ,
+        ...form,
       };
       submitForm(data);
 

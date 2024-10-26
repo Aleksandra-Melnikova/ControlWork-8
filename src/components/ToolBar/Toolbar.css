@@ -5,3 +5,6 @@
 .navbar ul .nav-link.active {
   color: white;
 }
+.title{
+  text-decoration: none;
+}

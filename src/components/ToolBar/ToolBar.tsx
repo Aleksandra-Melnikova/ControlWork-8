@@ -6,7 +6,7 @@ const ToolBar = () => {
     <>
       <nav className="navbar navbar-expand-lg bg-dark p-4">
         <div className="container px-4">
-          <NavLink className="name" to="/">
+          <NavLink className="name title" to="/">
             <span className=" navbar-brand mb-0 text-white fs-2  ">
               Quotes central
             </span>

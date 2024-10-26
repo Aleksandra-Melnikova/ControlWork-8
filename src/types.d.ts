@@ -12,24 +12,11 @@ export interface IQuoteFormModifications {
 }
 
 export interface IGetQuote {
-  quote:
-    { author: string;
-      category: string;
-      quoteText: string };
+  quote: { author: string; category: string; quoteText: string };
 }
 export interface IQuotes {
   id: string;
   author: string;
   quoteText: string;
-}
-
-
-export interface IQuotesModifications {
-  [quote: string]: IQuoteForm;
-}
-
-export interface IQuoteFromAPI {
-  id: string;
-    IGetQuote;
 }
 

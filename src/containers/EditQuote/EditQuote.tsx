@@ -1,10 +1,9 @@
-
-import FormQuote from '../../components/FormQuote/FormQuote.tsx';
-import { IQuoteForm} from '../../types';
-import { useNavigate, useParams } from 'react-router-dom';
-import  { useCallback, useEffect, useState } from 'react';
-import axiosAPI from '../../axiosAPI.ts';
-import Spinner from '../../components/UI/Spinner/Spinner.tsx';
+import FormQuote from "../../components/FormQuote/FormQuote.tsx";
+import { IQuoteForm } from "../../types";
+import { useNavigate, useParams } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import axiosAPI from "../../axiosAPI.ts";
+import Spinner from "../../components/UI/Spinner/Spinner.tsx";
 
 const EditQuote = () => {
   const [quote, setQuote] = useState<IQuoteForm>();
@@ -19,10 +18,10 @@ const EditQuote = () => {
         "quotes/" + id + ".json",
       );
 
-const result = response.data
+      const result = response.data;
       if (result) {
         const obj: IQuoteForm = {
-            author: result.author,
+          author: result.author,
           category: result.category,
           quoteText: result.quoteText,
         };
@@ -34,14 +33,12 @@ const result = response.data
       setLoading(false);
     }
   }, []);
-  console.log(quote)
 
   useEffect(() => {
     if (params.id) {
       void fetchOnePost(params.id);
     }
   }, [params.id, fetchOnePost]);
-  console.log(params.id);
 
   const submitForm = async (quote: IQuoteForm) => {
     try {
@@ -57,22 +54,25 @@ const result = response.data
     }
   };
 
-
-return (
-  <>
-    {loading ? (
-      <Spinner />
-    ) : (
-      <>
-        {quote? (
-          <>
-            <FormQuote title="Edit" submitForm={submitForm } formToOneQuote={quote}/>
-          </>
-        ) : null}
-      </>
-    )}
-  </>
-);
+  return (
+    <>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          {quote ? (
+            <>
+              <FormQuote
+                title="Edit"
+                submitForm={submitForm}
+                formToOneQuote={quote}
+              />
+            </>
+          ) : null}
+        </>
+      )}
+    </>
+  );
 };
 
 export default EditQuote;
