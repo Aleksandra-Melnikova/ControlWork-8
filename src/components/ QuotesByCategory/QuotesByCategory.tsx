@@ -7,11 +7,10 @@ import Spinner from "../UI/Spinner/Spinner.tsx";
 
 interface QuotesByCategoryProps {
   onEdit: (quote: IQuotes)=> void;
-  onDelete: (quote: IQuotes)=>void;
 }
 
 
-const QuotesByCategory:React.FC<QuotesByCategoryProps> = ({onEdit, onDelete}) => {
+const QuotesByCategory:React.FC<QuotesByCategoryProps> = ({onEdit}) => {
   const [quotes, setQuotes] = useState<IQuoteFormModifications[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -49,6 +48,14 @@ const QuotesByCategory:React.FC<QuotesByCategoryProps> = ({onEdit, onDelete}) =>
   useEffect(() => {
     void fetchData();
   }, [fetchData]);
+
+  const onDelete = async (quote: IQuotes) => {
+    if (quote.id) {
+      console.log(quote.id);
+      await axiosAPI.delete("quotes/" + quote.id + ".json");
+      void fetchData();
+    }
+  };
 
 
 

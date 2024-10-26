@@ -7,9 +7,8 @@ import { IQuotes } from '../../types';
 
 interface HomeProps {
   onEdit:(quote: IQuotes)=>void;
-  onDelete:(quote: IQuotes)=>void;
 }
-const Home:React.FC<HomeProps> = ({onEdit, onDelete}) => {
+const Home:React.FC<HomeProps> = ({onEdit}) => {
 
   return (
     <div className="container row justify-content-between mt-5 px-0">
@@ -18,7 +17,7 @@ const Home:React.FC<HomeProps> = ({onEdit, onDelete}) => {
       </div>
       <div className="col-9">
         {" "}
-        <QuotesByCategory onDelete={onDelete}  onEdit={onEdit} />
+        <QuotesByCategory  onEdit={onEdit} />
       </div>
     </div>
   );
