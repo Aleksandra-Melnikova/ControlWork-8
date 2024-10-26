@@ -10,8 +10,8 @@ const category =
 
 const SideNavigation = () => {
   return (
-    <div>
-      <ul className="nav flex-column text-start mt-5">
+    <div className='fs-4'>
+      <ul className="nav flex-column text-start ">
         <li className="nav-item">
           <a className="nav-link active" href="#">All</a>
         </li>
